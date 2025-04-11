@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-chatbot-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: react-chatbot
+  template:
+    metadata:
+      labels:
+        app: react-chatbot
+    spec:
+      containers:
+        - name: react-chatbot-container
+          image: your-dockerhub-username/react-chatbot:latest
+          ports:
+            - containerPort: 80
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-chatbot-service
+spec:
+  selector:
+    app: react-chatbot
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer  
